@@ -1,12 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
+import Button from '@material-ui/core/Button';
 import A from './A';
 import Img from './Img';
 import NavBar from './NavBar';
 import HeaderLink from './HeaderLink';
 import Banner from './banner.jpg';
 import messages from './messages';
+
 
 function Header() {
   return (
@@ -21,6 +22,9 @@ function Header() {
         <HeaderLink to="/features">
           <FormattedMessage {...messages.features} />
         </HeaderLink>
+        <Button variant="contained" color="primary">
+          Primary
+        </Button>
       </NavBar>
     </div>
   );
