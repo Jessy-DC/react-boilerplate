@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 import HeaderLink from './HeaderLink';
 import Banner from './banner.jpg';
 import messages from './messages';
-
+import { Link, NavLink } from 'react-router-dom';
 
 function Header() {
   return (
@@ -16,15 +16,17 @@ function Header() {
         <Img src={Banner} alt="react-boilerplate - Logo" />
       </A>
       <NavBar>
+        <NavLink to="/search" style={{ textDecoration: 'none' }}>
+          <Button variant="contained" color="secondary">
+            Search
+          </Button>
+        </NavLink>
         <HeaderLink to="/">
           <FormattedMessage {...messages.home} />
         </HeaderLink>
         <HeaderLink to="/features">
           <FormattedMessage {...messages.features} />
         </HeaderLink>
-        <Button variant="contained" color="primary">
-          Primary
-        </Button>
       </NavBar>
     </div>
   );
