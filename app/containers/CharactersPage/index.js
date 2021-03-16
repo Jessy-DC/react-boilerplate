@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import CharactersTable from './CharactersTable';
-import CharactersGrid from "./CharacterGrid";
+import CharactersGrid from './CharacterGrid';
 import messages from './messages';
 
 const HEADERS = new Headers({
@@ -24,14 +24,14 @@ export default class CharactersPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchName: 'a',
+      searchName: '',
       characters: [],
       checked: false,
     };
   }
 
   componentDidMount() {
-    this.handleApiCall(this.state.searchName);
+    this.handleApiCall('A');
   }
 
   handleChange = event => {
@@ -44,7 +44,7 @@ export default class CharactersPage extends React.Component {
   };
 
   handleApiCall = name => {
-    const API_URL = `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${name}&apikey=3cb9f312871cec62f82dc980caeded2c`
+    const API_URL = `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${name}&apikey=3cb9f312871cec62f82dc980caeded2c`;
     fetch(API_URL, INIT)
       .then(response => response.json())
       .then(json => {
@@ -55,7 +55,9 @@ export default class CharactersPage extends React.Component {
   };
 
   handleSearch = () => {
-    this.handleApiCall(this.state.searchName);
+    if (this.state.searchName !== '') {
+      this.handleApiCall(this.state.searchName);
+    }
   };
 
   render() {
@@ -97,13 +99,6 @@ export default class CharactersPage extends React.Component {
         ) : (
           <CharactersTable characters={this.state.characters} />
         )}
-
-        {/*{this.state.characters[0] ? (*/}
-        {/*  <CharacterCard character={this.state.characters[0]} />*/}
-        {/*) : (*/}
-        {/*  <div> </div>*/}
-        {/*)}*/}
-
       </div>
     );
   }
