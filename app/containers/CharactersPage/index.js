@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import H1 from 'components/H1';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { CheckBox } from '@material-ui/icons';
+import Checkbox from '@material-ui/core/Checkbox';
 import CharactersTable from './CharactersTable';
-import CharacterCard from './CharacterCard';
+import CharactersGrid from "./CharacterGrid";
 import messages from './messages';
 
 const HEADERS = new Headers({
@@ -26,6 +26,7 @@ export default class CharactersPage extends React.Component {
     this.state = {
       searchName: 'a',
       characters: [],
+      checked: false,
     };
   }
 
@@ -33,8 +34,13 @@ export default class CharactersPage extends React.Component {
     this.handleApiCall(this.state.searchName);
   }
 
-  handleChange = e => {
-    this.setState({ searchName: e.target.value });
+  handleChange = event => {
+    this.setState({ searchName: event.target.value });
+  };
+
+  handleCheck = event => {
+    const checkedValue = event.target.checked;
+    this.setState({ checked: checkedValue });
   };
 
   handleApiCall = name => {
@@ -80,14 +86,24 @@ export default class CharactersPage extends React.Component {
           >
             Search
           </Button>
-          <CheckBox />
+          <Checkbox
+            inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
+            checked={this.state.checked}
+            onChange={this.handleCheck}
+          />
         </div>
-        {this.state.characters[0] ? (
-          <CharacterCard character={this.state.characters[0]} />
+        {this.state.checked ? (
+          <CharactersGrid characters={this.state.characters} />
         ) : (
-          <div> </div>
+          <CharactersTable characters={this.state.characters} />
         )}
-        <CharactersTable characters={this.state.characters} />
+
+        {/*{this.state.characters[0] ? (*/}
+        {/*  <CharacterCard character={this.state.characters[0]} />*/}
+        {/*) : (*/}
+        {/*  <div> </div>*/}
+        {/*)}*/}
+
       </div>
     );
   }

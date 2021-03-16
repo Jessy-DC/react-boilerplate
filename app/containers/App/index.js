@@ -19,6 +19,7 @@ import Footer from 'components/Footer';
 
 import GlobalStyle from '../../global-styles';
 import CharactersPage from '../CharactersPage/Loadable';
+import CharacterDetails from '../CharacterDetailsPage';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -43,6 +44,7 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/features" component={FeaturePage} />
         <Route path="/search" component={CharactersPage} />
+        <Route path="/characterById/:id" component={CharacterDetails} />
         <Route path="" component={NotFoundPage} />
       </Switch>
       <Footer />

@@ -3,11 +3,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 
 import H1 from 'components/H1';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import CharactersTable from './CharactersTable';
-import CharactersGrid from "./CharacterGrid";
+import CharacterCard from '../CharactersPage/CharacterCard'
 import messages from './messages';
 
 const HEADERS = new Headers({
@@ -20,49 +16,37 @@ const INIT = {
   mode: 'cors',
 };
 
-export default class CharactersPage extends React.Component {
+export default class CharacterDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchName: 'a',
-      characters: [],
-      checked: false,
+      character: null,
+      searchId: props.match.params.id,
     };
   }
 
   componentDidMount() {
-    this.handleApiCall(this.state.searchName);
+    this.handleApiCall(this.state.searchId);
   }
 
-  handleChange = event => {
-    this.setState({ searchName: event.target.value });
-  };
-
-  handleCheck = event => {
-    const checkedValue = event.target.checked;
-    this.setState({ checked: checkedValue });
-  };
-
-  handleApiCall = name => {
-    const API_URL = `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${name}&apikey=3cb9f312871cec62f82dc980caeded2c`
+  handleApiCall = id => {
+    const API_URL = `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=3cb9f312871cec62f82dc980caeded2c`;
     fetch(API_URL, INIT)
       .then(response => response.json())
       .then(json => {
-        this.setState({ characters: json.data.results });
+        this.setState({
+          character: json.data.results[0],
+        });
       })
       .catch(error => console.log(error)) //error json
       .catch(error => console.log(error)) //error API
-  };
-
-  handleSearch = () => {
-    this.handleApiCall(this.state.searchName);
   };
 
   render() {
     return (
       <div>
         <Helmet>
-          <title>Characters Page</title>
+          <title>Character Details</title>
           <meta
             name="description"
             content="Feature page of React.js Boilerplate application"
@@ -72,38 +56,12 @@ export default class CharactersPage extends React.Component {
           <FormattedMessage {...messages.header} />
         </H1>
         <div>
-          <TextField
-            id="standard-search"
-            value={this.state.searchName}
-            onChange={this.handleChange}
-            label="Search field"
-            type="search"
-          />
-          <Button
-            onClick={this.handleSearch}
-            variant="contained"
-            color="inherit"
-          >
-            Search
-          </Button>
-          <Checkbox
-            inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-            checked={this.state.checked}
-            onChange={this.handleCheck}
-          />
+          {this.state.character ? (
+            <CharacterCard character={this.state.character} />
+          ) : (
+            <div>No character</div>
+          )}
         </div>
-        {this.state.checked ? (
-          <CharactersGrid characters={this.state.characters} />
-        ) : (
-          <CharactersTable characters={this.state.characters} />
-        )}
-
-        {/*{this.state.characters[0] ? (*/}
-        {/*  <CharacterCard character={this.state.characters[0]} />*/}
-        {/*) : (*/}
-        {/*  <div> </div>*/}
-        {/*)}*/}
-
       </div>
     );
   }

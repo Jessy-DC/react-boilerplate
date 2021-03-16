@@ -5,11 +5,11 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'boilerplate.containers.CharactersPage';
+export const scope = 'boilerplate.containers.CharacterDetailsPage';
 
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: "Search Page of Marvel's characters",
+    defaultMessage: "Details about Marvel's character",
   },
 });

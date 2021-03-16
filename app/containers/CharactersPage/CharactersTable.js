@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -26,17 +27,27 @@ export default function CharactersTable(props) {
         <TableHead>
           <TableRow className={classes.tableRow}>
             <TableCell className={classes.tableCell}>ID</TableCell>
-            <TableCell className={classes.tableCell} align="right">Name</TableCell>
-            <TableCell className={classes.tableCell} align="right">Description</TableCell>
-            <TableCell className={classes.tableCell} align="right">Date</TableCell>
-            <TableCell className={classes.tableCell} align="right">Comics</TableCell>
+            <TableCell className={classes.tableCell} align="right">
+              Name
+            </TableCell>
+            <TableCell className={classes.tableCell} align="right">
+              Description
+            </TableCell>
+            <TableCell className={classes.tableCell} align="right">
+              Date
+            </TableCell>
+            <TableCell className={classes.tableCell} align="right">
+              Comics
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {characters.map(character => (
             <TableRow key={character.id}>
               <TableCell component="th" scope="row">
-                {character.id}
+                <NavLink to={`/characterById/${character.id}`} style={{ textDecoration: 'none' }}>
+                  {character.id}
+                </NavLink>
               </TableCell>
               <TableCell align="right">{character.name}</TableCell>
               <TableCell align="right">{character.description}</TableCell>
