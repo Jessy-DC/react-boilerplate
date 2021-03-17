@@ -50,8 +50,8 @@ export default class CharactersPage extends React.Component {
       .then(json => {
         this.setState({ characters: json.data.results });
       })
-      .catch(error => console.log(error)) //error json
-      .catch(error => console.log(error)) //error API
+      .catch(error => console.log(error))
+      .catch(error => console.log(error));
   };
 
   handleSearch = () => {
